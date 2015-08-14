@@ -17,6 +17,13 @@ class AssertHtmlBody extends AssertBody
 		$this->html->addContent((string) $body);
 	}
 
+	public function countElements($selector, $count, $message = '')
+	{
+		Assert::assertCount($count, $this->html->filter($selector), $message);
+
+		return $this;
+	}
+
 	public function hasElement($selector, $message = '')
 	{
 		Assert::assertGreaterThan(0, count($this->html->filter($selector)), $message);
@@ -24,11 +31,9 @@ class AssertHtmlBody extends AssertBody
 		return $this;
 	}
 
-	public function countElements($selector, $count, $message = '')
+	public function hasNotElement($selector, $message = '')
 	{
-		Assert::assertCount($count, $this->html->filter($selector), $message);
-
-		return $this;
+		return $this->countElements($selector, 0, $message);
 	}
 
 	public function hasElementWithText($selector, $text, $message = '')
@@ -38,6 +43,24 @@ class AssertHtmlBody extends AssertBody
 		});
 
 		Assert::assertContains(trim($text), $texts, $message);
+
+		return $this;
+	}
+
+	public function hasNotElementWithText($selector, $text, $message = '')
+	{
+		$texts = $this->html->filter($selector)->each(function ($node, $i) {
+			return trim($node->text());
+		});
+
+		Assert::assertNotContains(trim($text), $texts, $message);
+
+		return $this;
+	}
+
+	public function foreachElement($selector, $callback)
+	{
+		$this->html->filter($selector)->each($callback);
 
 		return $this;
 	}
