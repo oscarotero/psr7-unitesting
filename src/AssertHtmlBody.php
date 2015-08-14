@@ -4,6 +4,7 @@ namespace Psr7Unitesting;
 use PHPUnit_Framework_Assert as Assert;
 use Psr\Http\Message\StreamInterface;
 use Symfony\Component\DomCrawler\Crawler;
+use Closure;
 
 /**
  * Class to execute html related assertions in a StreamInterface instance
@@ -80,7 +81,7 @@ class AssertHtmlBody extends AssertBody
      */
     public function hasElementWithText($selector, $text, $message = '')
     {
-        $texts = $this->html->filter($selector)->each(function ($node, $i) {
+        $texts = $this->html->filter($selector)->each(function ($node) {
             return trim($node->text());
         });
 
@@ -100,7 +101,7 @@ class AssertHtmlBody extends AssertBody
      */
     public function hasNotElementWithText($selector, $text, $message = '')
     {
-        $texts = $this->html->filter($selector)->each(function ($node, $i) {
+        $texts = $this->html->filter($selector)->each(function ($node) {
             return trim($node->text());
         });
 
@@ -112,12 +113,12 @@ class AssertHtmlBody extends AssertBody
     /**
      * Executes the callback for each element found
      *
-     * @param string   $selector
-     * @param callable $callback
+     * @param string  $selector
+     * @param Closure $callback
      *
      * @return self
      */
-    public function foreachElement($selector, callable $callback)
+    public function foreachElement($selector, Closure $callback)
     {
         $this->html->filter($selector)->each($callback);
 
