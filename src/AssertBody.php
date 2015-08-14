@@ -4,40 +4,109 @@ namespace Psr7Unitesting;
 use PHPUnit_Framework_Assert as Assert;
 use Psr\Http\Message\StreamInterface;
 
+/**
+ * Class to execute basic assertions with a StreamInterface instance
+ */
 class AssertBody
 {
-	protected $body;
+    protected $body;
+    protected $string;
 
-	public function __construct(StreamInterface $body)
-	{
-		$this->body = $body;
-	}
+    /**
+     * Constructor
+     *
+     * @param StreamInterface $body
+     */
+    public function __construct(StreamInterface $body)
+    {
+        $this->body = $body;
+        $this->string = (string) $body;
+    }
 
-	public function size($size, $message = '')
-	{
-		Assert::assertSame($size, $this->body->getSize(), $message);
-		
-		return $this;
-	}
+    /**
+     * Asserts that the body has a specific size
+     *
+     * @param integer $size
+     * @param string  $message
+     *
+     * @return self
+     */
+    public function size($size, $message = '')
+    {
+        Assert::assertSame($size, $this->body->getSize(), $message);
 
-	public function isSeekable($message = '')
-	{
-		Assert::assertTrue($this->body->isSeekable(), $message);
-		
-		return $this;
-	}
+        return $this;
+    }
 
-	public function isWritable($message = '')
-	{
-		Assert::assertTrue($this->body->isWritable(), $message);
-		
-		return $this;
-	}
+    /**
+     * Asserts that the body is seekable
+     *
+     * @param string $message
+     *
+     * @return self
+     */
+    public function isSeekable($message = '')
+    {
+        Assert::assertTrue($this->body->isSeekable(), $message);
 
-	public function isReadable($message = '')
-	{
-		Assert::assertTrue($this->body->isReadable(), $message);
-		
-		return $this;
-	}
+        return $this;
+    }
+
+    /**
+     * Asserts that the body is writable
+     *
+     * @param string $message
+     *
+     * @return self
+     */
+    public function isWritable($message = '')
+    {
+        Assert::assertTrue($this->body->isWritable(), $message);
+
+        return $this;
+    }
+
+    /**
+     * Asserts that the body is readable
+     *
+     * @param string $message
+     *
+     * @return self
+     */
+    public function isReadable($message = '')
+    {
+        Assert::assertTrue($this->body->isReadable(), $message);
+
+        return $this;
+    }
+
+    /**
+     * Asserts that the body contains a string
+     *
+     * @param string $string
+     * @param string $message
+     *
+     * @return self
+     */
+    public function hasString($string, $message = '')
+    {
+        Assert::assertInternalType('integer', strpos($this->string, $string), $message);
+
+        return $this;
+    }
+
+    /**
+     * Asserts that the body has not contains a string
+     *
+     * @param string $string
+     * @param string $message
+     *
+     * @return self
+     */
+    public function hasNotString($string, $message = '')
+    {
+        Assert::assertFalse(strpos($this->string, $string), $message);
+
+        return $this;
+    }
 }

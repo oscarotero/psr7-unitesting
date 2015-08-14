@@ -1,15 +1,22 @@
 <?php
 namespace Psr7Unitesting;
 
-use PHPUnit_Framework_Assert as Assert;
 use Psr\Http\Message\UriInterface;
 
+/**
+ * Class to execute assertions with a UriInterface instance
+ */
 class AssertUri
 {
-	protected $uri;
+    protected $uri;
 
-	public function __construct(UriInterface $uri)
-	{
-		$this->uri = $uri;
-	}
+    /**
+     * Constructor
+     *
+     * @param UriInterface $uri
+     */
+    public function __construct(UriInterface $uri)
+    {
+        $this->uri = $uri;
+    }
 }
