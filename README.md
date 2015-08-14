@@ -1,25 +1,21 @@
 # psr7-unitesting
 
-Simple library for execute unit tests in psr-7 compatible http messages.
+Simple library to execute unit tests in [psr-7](http://www.php-fig.org/psr/psr-7/) compatible http messages.
 
-It uses symfony/dom-crawler and symfony/css-selector library to parse and test the html in the body.
+It uses [symfony/dom-crawler](https://github.com/symfony/DomCrawler) and [symfony/css-selector](https://github.com/symfony/CssSelector) library to parse and test the html in the body.
 
 ## Usage example:
 
-In the following example, I've used `Zend\Diactoros` but you can use any psr-7 compatible library:
-
 ```php
 use Psr7Unitesting\AssertResponse;
-use Zend\Diactoros\ServerRequest;
 
 class AppTest extends PHPUnit_Framework_TestCase
 {
 	public function testHomePage()
 	{
-		//create a request and returns a response
+		//create a response
 		$app = new MyApp();
-		$request = (new ServerRequest())->withTargetPath('/');
-		$response = $app->dispatch($request);
+		$response = $app->dispatch('/');
 
 		//Ok, it's time to unitesting!!
 		(new AssertResponse($response))
@@ -47,4 +43,4 @@ class AppTest extends PHPUnit_Framework_TestCase
 }
 ```
 
-Note: This is a work in progress project, any suggestion o collaboration is welcome.
+Note: This is a work in progress project, any suggestion or pull request is welcome.
