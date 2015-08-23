@@ -109,4 +109,19 @@ class AssertBody
 
         return $this;
     }
+
+    /**
+     * Asserts the whole body
+     *
+     * @param string $body
+     * @param string $message
+     *
+     * @return self
+     */
+    public function string($body, $message = '')
+    {
+        Assert::assertSame($body, $this->string, $message);
+
+        return $this;
+    }
 }

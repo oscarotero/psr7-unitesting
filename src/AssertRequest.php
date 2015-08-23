@@ -50,21 +50,6 @@ class AssertRequest extends AssertMessage
     }
 
     /**
-     * Asserts the stringified uri
-     *
-     * @param string $uri
-     * @param string $message
-     *
-     * @return self
-     */
-    public function uri($uri, $message = '')
-    {
-        Assert::assertSame((string) $uri, (string) $this->message->getUri(), $message);
-
-        return $this;
-    }
-
-    /**
      * Creates an AssertUri instance to execute assertions with the UriInterface
      *
      * @return AssertUri
