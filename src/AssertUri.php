@@ -38,7 +38,7 @@ class AssertUri
     /**
      * Asserts the url authority
      *
-     * @param string $autority
+     * @param string $authority
      * @param string $message
      *
      * @return self
