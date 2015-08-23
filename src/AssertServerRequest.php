@@ -134,7 +134,7 @@ class AssertServerRequest extends AssertRequest
      * Asserts a uploaded file subset
      *
      * @param string $key
-     * @param string $value
+     * @param array  $subset
      * @param string $message
      *
      * @return self
