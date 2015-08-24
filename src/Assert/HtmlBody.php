@@ -121,8 +121,9 @@ class HtmlBody extends Body
     public function isValid($message = '')
     {
         $validator = new HtmlValidator($this->body);
+        $errors = array_values($validator->getErrors());
 
-        Assert::assertEmpty($validator->getErrors(), $message);
+        Assert::assertEmpty($errors, (empty($message) ? '' : "{$message}\n").print_r($errors, true));
 
         return $this;
     }
