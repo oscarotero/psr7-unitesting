@@ -11,33 +11,64 @@ use Psr\Http\Message\StreamInterface;
  */
 class Html
 {
+    protected static $callable;
+
     protected $body;
-    protected $client;
     protected $result;
+    protected $useCli = true;
 
     /**
      * Constructor
      *
      * @param StreamInterface $body
      */
-    public function __construct(StreamInterface $body, Client $client = null)
+    public function __construct(StreamInterface $body)
     {
         $this->body = $body;
-        $this->client = $client;
     }
 
     /**
-     * Execute the validation
+     * Set false to use http api instead cli
+     * 
+     * @param bool $cli
+     * 
+     * @return self
      */
-    protected function validate()
+    public function useCli($cli = true)
     {
+        $this->useCli = $cli;
+
+        return $this;
+    }
+
+    /**
+     * Detect and return the java callable
+     * 
+     * @return string|false
+     */
+    protected static function getCallable()
+    {
+        if (isset(static::$callable)) {
+            return static::$callable;
+        }
+
         $vnu = __DIR__.'/../../vendor/vnu/validator/vnu.jar';
 
         if (!is_file($vnu)) {
             $vnu = __DIR__.'/../../../../vendor/vnu/validator/vnu.jar';
         }
 
-        if (!is_file($vnu)) {
+        return static::$callable = (is_file($vnu) ? $vnu : false);
+    }
+
+    /**
+     * Execute the validation through the command line
+     */
+    protected function validateCli()
+    {
+        $vnu = static::getCallable();
+
+        if (empty($vnu)) {
             throw new \RuntimeException("vnu.jar file not found!");
         }
 
@@ -51,6 +82,19 @@ class Html
     }
 
     /**
+     * Execute the validation through the api
+     */
+    protected function validateAPI()
+    {
+        $request = new Request('POST', 'https://validator.w3.org/nu/?out=json', ['Content-Type' => 'text/html; charset=utf-8'], $this->body);
+        $client = new Client();
+
+        $response = $client->send($request);
+
+        $this->result = json_decode((string) $response->getBody(), true);
+    }
+
+    /**
      * Returns the validator results
      *
      * @return array
@@ -58,7 +102,11 @@ class Html
     public function getResult()
     {
         if ($this->result === null) {
-            $this->validate();
+            if ($this->useCli) {
+                $this->validateCli();
+            } else {
+                $this->validateAPI();
+            }
         }
 
         return $this->result;
