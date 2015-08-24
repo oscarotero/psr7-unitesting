@@ -1,5 +1,5 @@
 <?php
-namespace Psr7Unitesting;
+namespace Psr7Unitesting\Assert;
 
 use PHPUnit_Framework_Assert as Assert;
 use Psr\Http\Message\StreamInterface;
@@ -7,7 +7,7 @@ use Psr\Http\Message\StreamInterface;
 /**
  * Class to execute basic assertions with a StreamInterface instance
  */
-class AssertBody
+class Body
 {
     protected $body;
     protected $string;

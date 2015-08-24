@@ -1,6 +1,7 @@
 <?php
-namespace Psr7Unitesting;
+namespace Psr7Unitesting\Assert;
 
+use Psr7Unitesting\Validators\Html as HtmlValidator;
 use PHPUnit_Framework_Assert as Assert;
 use Psr\Http\Message\StreamInterface;
 use Symfony\Component\DomCrawler\Crawler;
@@ -9,7 +10,7 @@ use Closure;
 /**
  * Class to execute html related assertions in a StreamInterface instance
  */
-class AssertHtmlBody extends AssertBody
+class HtmlBody extends Body
 {
     protected $html;
 
@@ -106,6 +107,22 @@ class AssertHtmlBody extends AssertBody
         });
 
         Assert::assertNotContains(trim($text), $texts, $message);
+
+        return $this;
+    }
+
+    /**
+     * Asserts that the html is valid
+     *
+     * @param string $message
+     *
+     * @return self
+     */
+    public function isValid($message = '')
+    {
+        $validator = new HtmlValidator($this->body);
+
+        Assert::assertEmpty($validator->getErrors(), $message);
 
         return $this;
     }

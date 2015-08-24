@@ -1,5 +1,5 @@
 <?php
-namespace Psr7Unitesting;
+namespace Psr7Unitesting\Assert;
 
 use PHPUnit_Framework_Assert as Assert;
 use Psr\Http\Message\MessageInterface;
@@ -7,7 +7,7 @@ use Psr\Http\Message\MessageInterface;
 /**
  * Class to execute assertions for generic http messages
  */
-class AssertMessage
+class Message
 {
     protected $message;
 
@@ -85,10 +85,10 @@ class AssertMessage
     /**
      * Creates an AssertBody instance to execute assertions in the body
      *
-     * @return AssertBody
+     * @return Body
      */
     public function getBody()
     {
-        return new AssertBody($this->message->getBody());
+        return new Body($this->message->getBody());
     }
 }

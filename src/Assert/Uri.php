@@ -1,12 +1,12 @@
 <?php
-namespace Psr7Unitesting;
+namespace Psr7Unitesting\Assert;
 
 use Psr\Http\Message\UriInterface;
 
 /**
  * Class to execute assertions with a UriInterface instance
  */
-class AssertUri
+class Uri
 {
     protected $uri;
 

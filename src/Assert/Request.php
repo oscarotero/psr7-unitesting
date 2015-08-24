@@ -1,5 +1,5 @@
 <?php
-namespace Psr7Unitesting;
+namespace Psr7Unitesting\Assert;
 
 use PHPUnit_Framework_Assert as Assert;
 use Psr\Http\Message\RequestInterface;
@@ -7,7 +7,7 @@ use Psr\Http\Message\RequestInterface;
 /**
  * Class to execute assertions in a RequestInstance message
  */
-class AssertRequest extends AssertMessage
+class Request extends Message
 {
     /**
      * Constructor
@@ -56,6 +56,6 @@ class AssertRequest extends AssertMessage
      */
     public function getUri()
     {
-        return new AssertUri($this->message->getUri());
+        return new Uri($this->message->getUri());
     }
 }

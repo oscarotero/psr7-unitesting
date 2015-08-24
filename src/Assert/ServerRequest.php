@@ -1,5 +1,5 @@
 <?php
-namespace Psr7Unitesting;
+namespace Psr7Unitesting\Assert;
 
 use PHPUnit_Framework_Assert as Assert;
 use Psr\Http\Message\ServerRequestInterface;
@@ -7,7 +7,7 @@ use Psr\Http\Message\ServerRequestInterface;
 /**
  * Class to execute assertions in a ServerRequestInstance message
  */
-class AssertServerRequest extends AssertRequest
+class ServerRequest extends Request
 {
     /**
      * Constructor
