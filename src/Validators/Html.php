@@ -3,6 +3,7 @@ namespace Psr7Unitesting\Validators;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
+use Symfony\Component\Process\Process;
 use Psr\Http\Message\StreamInterface;
 
 /**
@@ -30,15 +31,23 @@ class Html
      */
     protected function validate()
     {
-        $request = new Request('POST', 'https://validator.w3.org/nu/?out=json', ['Content-Type' => 'text/html; charset=utf-8'], $this->body);
+        $vnu = __DIR__.'/../../vendor/vnu/validator/vnu.jar';
 
-        if ($this->client === null) {
-            $this->client = new Client();
+        if (!is_file($vnu)) {
+            $vnu = __DIR__.'/../../../../vendor/vnu/validator/vnu.jar';
         }
 
-        $response = $this->client->send($request);
+        if (!is_file($vnu)) {
+            throw new \RuntimeException("vnu.jar file not found!");
+        }
 
-        $this->result = json_decode((string) $response->getBody(), true);
+        $process = new Process("java -jar {$vnu} --format json - ", null, null, (string) $this->body);
+
+        $process->run();
+
+        $output = $process->getOutput() ?: $process->getErrorOutput();
+
+        $this->result = json_decode((string) $output, true);
     }
 
     /**
