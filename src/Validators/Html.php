@@ -11,68 +11,33 @@ use Psr\Http\Message\StreamInterface;
  */
 class Html
 {
-    protected static $callable;
+    const METHOD_REST = 1;
+    const METHOD_CLI = 2;
 
-    protected $body;
+    protected $html;
     protected $result;
-    protected $useCli = true;
+    protected $method;
 
     /**
      * Constructor
      *
-     * @param StreamInterface $body
+     * @param string $html
+     * @param int    $method
      */
-    public function __construct(StreamInterface $body)
+    public function __construct($html, $method = 2)
     {
-        $this->body = $body;
-    }
-
-    /**
-     * Set false to use http api instead cli
-     * 
-     * @param bool $cli
-     * 
-     * @return self
-     */
-    public function useCli($cli = true)
-    {
-        $this->useCli = $cli;
-
-        return $this;
-    }
-
-    /**
-     * Detect and return the java callable
-     * 
-     * @return string|false
-     */
-    protected static function getCallable()
-    {
-        if (isset(static::$callable)) {
-            return static::$callable;
-        }
-
-        $vnu = __DIR__.'/../../vendor/vnu/validator/vnu.jar';
-
-        if (!is_file($vnu)) {
-            $vnu = __DIR__.'/../../../../vendor/vnu/validator/vnu.jar';
-        }
-
-        return static::$callable = (is_file($vnu) ? $vnu : false);
+        $this->html = $html;
+        $this->method = $method;
     }
 
     /**
      * Execute the validation through the command line
      */
-    protected function validateCli()
+    protected function validateCLI()
     {
-        $vnu = static::getCallable();
+        $vnu = __DIR__.'/../../bins/vnu/vnu.jar';
 
-        if (empty($vnu)) {
-            throw new \RuntimeException("vnu.jar file not found!");
-        }
-
-        $process = new Process("java -jar {$vnu} --format json - ", null, null, (string) $this->body);
+        $process = new Process("java -jar {$vnu} --format json - ", null, null, $this->html);
 
         $process->run();
 
@@ -84,7 +49,7 @@ class Html
     /**
      * Execute the validation through the api
      */
-    protected function validateAPI()
+    protected function validateREST()
     {
         $request = new Request('POST', 'https://validator.w3.org/nu/?out=json', ['Content-Type' => 'text/html; charset=utf-8'], $this->body);
         $client = new Client();
@@ -102,10 +67,17 @@ class Html
     public function getResult()
     {
         if ($this->result === null) {
-            if ($this->useCli) {
-                $this->validateCli();
-            } else {
-                $this->validateAPI();
+            switch ($this->method) {
+                case static::METHOD_CLI:
+                    $this->validateCLI();
+                    break;
+
+                case static::METHOD_REST:
+                    $this->validateREST();
+                    break;
+                
+                default:
+                    throw new RuntimeException('Invalid validation method');
             }
         }
 

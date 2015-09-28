@@ -17,27 +17,13 @@
         "email": "oom@oscarotero.com",
         "issues": "https://github.com/oscarotero/psr7-unitesting/issues"
     },
-    "repositories": [
-        {
-            "type": "package",
-            "package": {
-                "name": "vnu/validator",
-                "version": "15.6.29",
-                "dist": {
-                    "url": "https://github.com/validator/validator/releases/download/15.6.29/vnu.jar_15.6.29.zip",
-                    "type": "zip"
-                }
-            }
-        }
-    ],
     "require": {
         "phpunit/phpunit": "^4.8",
         "psr/http-message": "^1.0",
         "symfony/dom-crawler": "^2.7",
         "symfony/css-selector": "^2.7",
         "guzzlehttp/guzzle": "^6.0",
-        "symfony/process": "^2.7",
-        "vnu/validator": "*"
+        "symfony/process": "^2.7"
     },
     "require-dev": {
         "zendframework/zend-diactoros": "1.*"

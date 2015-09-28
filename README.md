@@ -2,7 +2,7 @@
 
 Simple library to execute unit tests in [psr-7](http://www.php-fig.org/psr/psr-7/) compatible http messages.
 
-It uses [symfony/dom-crawler](https://github.com/symfony/DomCrawler) and [symfony/css-selector](https://github.com/symfony/CssSelector) library to parse and test the html in the body.
+It uses [symfony/dom-crawler](https://github.com/symfony/DomCrawler) and [symfony/css-selector](https://github.com/symfony/CssSelector) library to parse and test the html in the body. And [Guzzle](https://github.com/guzzle/guzzle) as http client
 
 ## Usage example:
 
@@ -28,6 +28,7 @@ class AppTest extends PHPUnit_Framework_TestCase
 			->getHtmlBody()
 				->isReadable()
 				->isSeekable()
+				->isValid() //use vnu validator
 				->hasElement('meta[property="og:title"]')
 				->hasNotElement('blink')
 				->hasElementWithText('a.home-link', 'Go to home')
