@@ -8,7 +8,7 @@ namespace Psr7Unitesting\Assert;
 abstract class BaseAssert
 {
     /**
-     * @var Assert
+     * @var BaseAssert
      */
     protected $previous;
 

@@ -1,8 +1,12 @@
 # psr7-unitesting
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/oscarotero/psr7-unitesting/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/oscarotero/psr7-unitesting/?branch=master)
+
 Simple library to execute unit tests in [psr-7](http://www.php-fig.org/psr/psr-7/) compatible http messages.
 
 It uses [symfony/dom-crawler](https://github.com/symfony/DomCrawler) and [symfony/css-selector](https://github.com/symfony/CssSelector) library to parse and test the html in the body. And [Guzzle](https://github.com/guzzle/guzzle) as http client
+
+This package provides a binary java file with the w3c vnu validator (to validate html) but you can use the REST api (slower) if you don't have (or don't want to have) java installed.
 
 ## Usage example:
 
@@ -31,7 +35,7 @@ class AppTest extends PHPUnit_Framework_TestCase
 				->end() //back to Assert\Response
 
 			->assertHtml()
-				->isValid() //use vnu validator
+				->isValid() //use w3c vnu validator
 				->hasElement('meta[property="og:title"]')
 				->hasNotElement('blink')
 				->hasElementWithText('a.home-link', 'Go to home')

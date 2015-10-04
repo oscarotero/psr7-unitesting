@@ -51,7 +51,7 @@ class Html
      */
     protected function validateREST()
     {
-        $request = new Request('POST', 'https://validator.w3.org/nu/?out=json', ['Content-Type' => 'text/html; charset=utf-8'], $this->body);
+        $request = new Request('POST', 'https://validator.w3.org/nu/?out=json', ['Content-Type' => 'text/html; charset=utf-8'], $this->html);
         $client = new Client();
 
         $response = $client->send($request);
