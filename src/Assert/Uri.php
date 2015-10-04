@@ -1,27 +1,33 @@
 <?php
+
 namespace Psr7Unitesting\Assert;
 
 use Psr\Http\Message\UriInterface;
 
 /**
- * Class to execute assertions with a UriInterface instance
+ * Class to execute assertions with a UriInterface instance.
  */
-class Uri
+class Uri extends BaseAssert
 {
+    /**
+     * @var UriInterface
+     */
     protected $uri;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param UriInterface $uri
+     * @param UriInterface    $uri
+     * @param BaseAssert|null $previous
      */
-    public function __construct(UriInterface $uri)
+    public function __construct(UriInterface $uri, BaseAssert $previous = null)
     {
         $this->uri = $uri;
+        $this->previous($previous);
     }
 
     /**
-     * Asserts the url scheme
+     * Asserts the url scheme.
      *
      * @param string $scheme
      * @param string $message
@@ -36,7 +42,7 @@ class Uri
     }
 
     /**
-     * Asserts the url authority
+     * Asserts the url authority.
      *
      * @param string $authority
      * @param string $message
@@ -51,7 +57,7 @@ class Uri
     }
 
     /**
-     * Asserts the url user info
+     * Asserts the url user info.
      *
      * @param string $userInfo
      * @param string $message
@@ -66,7 +72,7 @@ class Uri
     }
 
     /**
-     * Asserts the url host
+     * Asserts the url host.
      *
      * @param string $host
      * @param string $message
@@ -81,7 +87,7 @@ class Uri
     }
 
     /**
-     * Asserts the url port
+     * Asserts the url port.
      *
      * @param int    $port
      * @param string $message
@@ -96,7 +102,7 @@ class Uri
     }
 
     /**
-     * Asserts the url path
+     * Asserts the url path.
      *
      * @param int    $path
      * @param string $message
@@ -111,7 +117,7 @@ class Uri
     }
 
     /**
-     * Asserts the url query
+     * Asserts the url query.
      *
      * @param string $query
      * @param string $message
@@ -126,7 +132,7 @@ class Uri
     }
 
     /**
-     * Asserts the url fragment
+     * Asserts the url fragment.
      *
      * @param string $fragment
      * @param string $message
@@ -141,7 +147,7 @@ class Uri
     }
 
     /**
-     * Asserts the whole url
+     * Asserts the whole url.
      *
      * @param string $url
      * @param string $message

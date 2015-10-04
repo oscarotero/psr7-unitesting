@@ -1,13 +1,13 @@
 <?php
+
 namespace Psr7Unitesting\Validators;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use Symfony\Component\Process\Process;
-use Psr\Http\Message\StreamInterface;
 
 /**
- * Class to validate the html code using the w3c API
+ * Class to validate the html code using the w3c API.
  */
 class Html
 {
@@ -19,7 +19,7 @@ class Html
     protected $method;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string $html
      * @param int    $method
@@ -31,7 +31,7 @@ class Html
     }
 
     /**
-     * Execute the validation through the command line
+     * Execute the validation through the command line.
      */
     protected function validateCLI()
     {
@@ -47,7 +47,7 @@ class Html
     }
 
     /**
-     * Execute the validation through the api
+     * Execute the validation through the api.
      */
     protected function validateREST()
     {
@@ -60,7 +60,7 @@ class Html
     }
 
     /**
-     * Returns the validator results
+     * Returns the validator results.
      *
      * @return array
      */
@@ -75,7 +75,7 @@ class Html
                 case static::METHOD_REST:
                     $this->validateREST();
                     break;
-                
+
                 default:
                     throw new RuntimeException('Invalid validation method');
             }
@@ -85,7 +85,7 @@ class Html
     }
 
     /**
-     * Returns the validator errors
+     * Returns the validator errors.
      *
      * @return array
      */

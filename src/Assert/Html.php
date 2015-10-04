@@ -1,4 +1,5 @@
 <?php
+
 namespace Psr7Unitesting\Assert;
 
 use Psr7Unitesting\Validators\Html as HtmlValidator;
@@ -8,31 +9,35 @@ use Symfony\Component\DomCrawler\Crawler;
 use Closure;
 
 /**
- * Class to execute html related assertions in a StreamInterface instance
+ * Class to execute html related assertions in a StreamInterface instance.
  */
-class HtmlBody extends Body
+class Html extends Body
 {
+    /**
+     * @var Crawler
+     */
     protected $html;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param StreamInterface $body
+     * @param BaseAssert|null $previous
      */
-    public function __construct(StreamInterface $body)
+    public function __construct(StreamInterface $body, BaseAssert $previous = null)
     {
-        parent::__construct($body);
+        parent::__construct($body, $previous);
 
         $this->html = new Crawler();
         $this->html->addContent($this->string);
     }
 
     /**
-     * Asserts the number of elements matching with a selector
+     * Asserts the number of elements matching with a selector.
      *
-     * @param string  $selector
-     * @param integer $count
-     * @param string  $message
+     * @param string $selector
+     * @param int    $count
+     * @param string $message
      *
      * @return self
      */
@@ -44,7 +49,7 @@ class HtmlBody extends Body
     }
 
     /**
-     * Asserts that there is (at least) one element matching with a selector
+     * Asserts that there is (at least) one element matching with a selector.
      *
      * @param string $selector
      * @param string $message
@@ -59,7 +64,7 @@ class HtmlBody extends Body
     }
 
     /**
-     * Asserts that there is not elements matching with a selector
+     * Asserts that there is not elements matching with a selector.
      *
      * @param string $selector
      * @param string $message
@@ -72,7 +77,7 @@ class HtmlBody extends Body
     }
 
     /**
-     * Asserts that there is (at least) one element matching with a selector and content
+     * Asserts that there is (at least) one element matching with a selector and content.
      *
      * @param string $selector
      * @param string $text
@@ -92,7 +97,7 @@ class HtmlBody extends Body
     }
 
     /**
-     * Asserts that there is no elements matching with a selector and content
+     * Asserts that there is no elements matching with a selector and content.
      *
      * @param string $selector
      * @param string $text
@@ -112,7 +117,7 @@ class HtmlBody extends Body
     }
 
     /**
-     * Asserts that the html is valid
+     * Asserts that the html is valid.
      *
      * @param string $message
      *
@@ -129,7 +134,7 @@ class HtmlBody extends Body
     }
 
     /**
-     * Executes the callback for each element found
+     * Executes the callback for each element found.
      *
      * @param string  $selector
      * @param Closure $callback

@@ -1,26 +1,33 @@
 <?php
+
 namespace Psr7Unitesting\Assert;
 
 use PHPUnit_Framework_Assert as Assert;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Class to execute assertions in a ServerRequestInstance message
+ * Class to execute assertions in a ServerRequestInstance message.
  */
 class ServerRequest extends Request
 {
     /**
-     * Constructor
+     * @var ServerRequestInterface
+     */
+    protected $message;
+
+    /**
+     * Constructor.
      *
      * @param ServerRequestInterface $message
+     * @param BaseAssert|null        $previous
      */
-    public function __construct(ServerRequestInterface $message)
+    public function __construct(ServerRequestInterface $message, BaseAssert $previous = null)
     {
-        parent::__construct($message);
+        parent::__construct($message, $previous);
     }
 
     /**
-     * Check if the server params contains a key
+     * Check if the server params contains a key.
      *
      * @param string $key
      * @param string $message
@@ -35,7 +42,7 @@ class ServerRequest extends Request
     }
 
     /**
-     * Asserts a server param
+     * Asserts a server param.
      *
      * @param string $key
      * @param string $value
@@ -52,7 +59,7 @@ class ServerRequest extends Request
     }
 
     /**
-     * Check if the cookie params contains a key
+     * Check if the cookie params contains a key.
      *
      * @param string $key
      * @param string $message
@@ -67,7 +74,7 @@ class ServerRequest extends Request
     }
 
     /**
-     * Asserts a cookie param
+     * Asserts a cookie param.
      *
      * @param string $key
      * @param string $value
@@ -84,7 +91,7 @@ class ServerRequest extends Request
     }
 
     /**
-     * Check if the query params contains a key
+     * Check if the query params contains a key.
      *
      * @param string $key
      * @param string $message
@@ -99,7 +106,7 @@ class ServerRequest extends Request
     }
 
     /**
-     * Asserts a query param
+     * Asserts a query param.
      *
      * @param string $key
      * @param string $value
@@ -116,7 +123,7 @@ class ServerRequest extends Request
     }
 
     /**
-     * Check if the uploadedFiles contains a key
+     * Check if the uploadedFiles contains a key.
      *
      * @param string $key
      * @param string $message
@@ -131,7 +138,7 @@ class ServerRequest extends Request
     }
 
     /**
-     * Asserts a uploaded file subset
+     * Asserts a uploaded file subset.
      *
      * @param string $key
      * @param array  $subset
@@ -148,7 +155,7 @@ class ServerRequest extends Request
     }
 
     /**
-     * Check if the parsedBody params contains a key
+     * Check if the parsedBody params contains a key.
      *
      * @param string $key
      * @param string $message
@@ -163,7 +170,7 @@ class ServerRequest extends Request
     }
 
     /**
-     * Asserts a parsedBody param
+     * Asserts a parsedBody param.
      *
      * @param string $key
      * @param string $value
@@ -180,7 +187,7 @@ class ServerRequest extends Request
     }
 
     /**
-     * Check if the attributes contains a key
+     * Check if the attributes contains a key.
      *
      * @param string $key
      * @param string $message
@@ -195,7 +202,7 @@ class ServerRequest extends Request
     }
 
     /**
-     * Asserts an attribute
+     * Asserts an attribute.
      *
      * @param string $key
      * @param string $value

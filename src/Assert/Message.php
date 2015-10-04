@@ -1,28 +1,34 @@
 <?php
+
 namespace Psr7Unitesting\Assert;
 
 use PHPUnit_Framework_Assert as Assert;
 use Psr\Http\Message\MessageInterface;
 
 /**
- * Class to execute assertions for generic http messages
+ * Class to execute assertions for generic http messages.
  */
-class Message
+class Message extends BaseAssert
 {
+    /**
+     * @var MessageInterface
+     */
     protected $message;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param MessageInterface $message
+     * @param BaseAssert|null  $previous
      */
-    public function __construct(MessageInterface $message)
+    public function __construct(MessageInterface $message, BaseAssert $previous = null)
     {
         $this->message = $message;
+        $this->previous($previous);
     }
 
     /**
-     * Asserts that a header exists
+     * Asserts that a header exists.
      *
      * @param string $name
      * @param string $message
@@ -37,7 +43,7 @@ class Message
     }
 
     /**
-     * Asserts that a header does not exists
+     * Asserts that a header does not exists.
      *
      * @param string $name
      * @param string $message
@@ -52,7 +58,7 @@ class Message
     }
 
     /**
-     * Asserts that a header has a specific value
+     * Asserts that a header has a specific value.
      *
      * @param string $name
      * @param string $value
@@ -68,7 +74,7 @@ class Message
     }
 
     /**
-     * Asserts the protocol version of the message
+     * Asserts the protocol version of the message.
      *
      * @param string $version
      * @param string $message
@@ -83,12 +89,12 @@ class Message
     }
 
     /**
-     * Creates an AssertBody instance to execute assertions in the body
+     * Creates a Body instance to execute assertions in the body.
      *
      * @return Body
      */
-    public function getBody()
+    public function assertBody()
     {
-        return new Body($this->message->getBody());
+        return new Body($this->message->getBody(), $this);
     }
 }

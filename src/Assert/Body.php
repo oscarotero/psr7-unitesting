@@ -1,33 +1,43 @@
 <?php
+
 namespace Psr7Unitesting\Assert;
 
 use PHPUnit_Framework_Assert as Assert;
 use Psr\Http\Message\StreamInterface;
 
 /**
- * Class to execute basic assertions with a StreamInterface instance
+ * Class to execute basic assertions with a StreamInterface instance.
  */
-class Body
+class Body extends BaseAssert
 {
+    /**
+     * @var StreamInterface
+     */
     protected $body;
+
+    /**
+     * @var string
+     */
     protected $string;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param StreamInterface $body
+     * @param BaseAssert|null $previous
      */
-    public function __construct(StreamInterface $body)
+    public function __construct(StreamInterface $body, BaseAssert $previous = null)
     {
         $this->body = $body;
         $this->string = (string) $body;
+        $this->previous($previous);
     }
 
     /**
-     * Asserts that the body has a specific size
+     * Asserts that the body has a specific size.
      *
-     * @param integer $size
-     * @param string  $message
+     * @param int    $size
+     * @param string $message
      *
      * @return self
      */
@@ -39,7 +49,7 @@ class Body
     }
 
     /**
-     * Asserts that the body is seekable
+     * Asserts that the body is seekable.
      *
      * @param string $message
      *
@@ -53,7 +63,7 @@ class Body
     }
 
     /**
-     * Asserts that the body is writable
+     * Asserts that the body is writable.
      *
      * @param string $message
      *
@@ -67,7 +77,7 @@ class Body
     }
 
     /**
-     * Asserts that the body is readable
+     * Asserts that the body is readable.
      *
      * @param string $message
      *
@@ -81,7 +91,7 @@ class Body
     }
 
     /**
-     * Asserts that the body contains a string
+     * Asserts that the body contains a string.
      *
      * @param string $string
      * @param string $message
@@ -96,7 +106,7 @@ class Body
     }
 
     /**
-     * Asserts that the body has not contains a string
+     * Asserts that the body has not contains a string.
      *
      * @param string $string
      * @param string $message
@@ -111,7 +121,7 @@ class Body
     }
 
     /**
-     * Asserts the whole body
+     * Asserts the whole body.
      *
      * @param string $body
      * @param string $message
@@ -123,5 +133,15 @@ class Body
         Assert::assertSame($body, $this->string, $message);
 
         return $this;
+    }
+
+    /**
+     * Creates an instance of Html to execute assertions with the html code.
+     *
+     * @return Html
+     */
+    public function assertHtml()
+    {
+        return new Html($this->body, $this);
     }
 }

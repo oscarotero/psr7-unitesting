@@ -1,29 +1,36 @@
 <?php
+
 namespace Psr7Unitesting\Assert;
 
 use PHPUnit_Framework_Assert as Assert;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Class to execute assertions with a ResponseInterface instance
+ * Class to execute assertions with a ResponseInterface instance.
  */
 class Response extends Message
 {
     /**
-     * Constructor
+     * @var ResponseInterface
+     */
+    protected $message;
+
+    /**
+     * Constructor.
      *
      * @param ResponseInterface $message
+     * @param BaseAssert|null   $previous
      */
-    public function __construct(ResponseInterface $message)
+    public function __construct(ResponseInterface $message, BaseAssert $previous = null)
     {
-        parent::__construct($message);
+        parent::__construct($message, $previous);
     }
 
     /**
-     * Asserts the status code of the response
+     * Asserts the status code of the response.
      *
-     * @param integer $code
-     * @param string  $message
+     * @param int    $code
+     * @param string $message
      *
      * @return self
      */
@@ -35,7 +42,7 @@ class Response extends Message
     }
 
     /**
-     * Asserts the reason phrase
+     * Asserts the reason phrase.
      *
      * @param string $reasonPhrase
      * @param string $message
@@ -50,12 +57,12 @@ class Response extends Message
     }
 
     /**
-     * Creates an instance of AssertHtmlBody to execute assertions with the html code
+     * Creates an instance of Html to execute assertions with the html code.
      *
-     * @return AssertHtmlBody
+     * @return Html
      */
-    public function getHtmlBody()
+    public function assertHtml()
     {
-        return new HtmlBody($this->message->getBody());
+        return new Html($this->message->getBody(), $this);
     }
 }

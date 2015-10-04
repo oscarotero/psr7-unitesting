@@ -7,27 +7,30 @@ It uses [symfony/dom-crawler](https://github.com/symfony/DomCrawler) and [symfon
 ## Usage example:
 
 ```php
-use Psr7Unitesting\AssertResponse;
+use GuzzleHttp\Client;
+use Psr7Unitesting\Assert;
 
 class AppTest extends PHPUnit_Framework_TestCase
 {
 	public function testHomePage()
 	{
-		//create a response
-		$app = new MyApp();
-		$response = $app->dispatch('/');
+		//Get the home page
+		$client = new Client();
+		$response = $client->get('http://example.com');
 
-		//Ok, it's time to unitesting!!
-		(new AssertResponse($response))
+		//Test the response
+		(new Assert\Response($response))
 			->statusCode(200)
 			->hasHeader('Cache-Control')
 			->hasHeaderWithText('Content-Type', 'text/html')
 			->hasNotHeader('Expires')
 
-			//returns an AssertHtmlBody to check the body content
-			->getHtmlBody()
+			->assertBody()
 				->isReadable()
 				->isSeekable()
+				->end() //back to Assert\Response
+
+			->assertHtml()
 				->isValid() //use vnu validator
 				->hasElement('meta[property="og:title"]')
 				->hasNotElement('blink')
@@ -43,5 +46,3 @@ class AppTest extends PHPUnit_Framework_TestCase
 	}
 }
 ```
-
-Note: This is a work in progress project, any suggestion or pull request is welcome.
