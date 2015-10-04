@@ -119,13 +119,14 @@ class Html extends Body
     /**
      * Asserts that the html is valid.
      *
+     * @param int    $method  One of the HtmlValidator::METHOD_* constants
      * @param string $message
      *
      * @return self
      */
-    public function isValid($message = '')
+    public function isValid($method = HtmlValidator::METHOD_CLI, $message = '')
     {
-        $validator = new HtmlValidator($this->body);
+        $validator = new HtmlValidator($this->body, $method);
         $errors = array_values($validator->getErrors());
 
         Assert::assertEmpty($errors, (empty($message) ? '' : "{$message}\n").print_r($errors, true));
