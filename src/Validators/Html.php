@@ -13,7 +13,7 @@ class Html
 {
     const METHOD_REST = 1;
     const METHOD_CLI = 2;
-    const BIN_FILE = '/vnu/vnu.jar';
+    const BIN_FILE = '/vnu.16.3.3/vnu.jar';
 
     protected $html;
     protected $result;
