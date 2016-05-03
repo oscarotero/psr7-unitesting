@@ -13,6 +13,7 @@ class Html
 {
     const METHOD_REST = 1;
     const METHOD_CLI = 2;
+    const BIN_FILE = '/vnu/vnu.jar';
 
     protected $html;
     protected $result;
@@ -35,7 +36,7 @@ class Html
      */
     protected function validateCLI()
     {
-        $vnu = __DIR__.'/../../bins/vnu/vnu.jar';
+        $vnu = __DIR__.'/../../bins/'.self::BIN_FILE;
 
         $process = new Process("java -jar {$vnu} --format json - ", null, null, $this->html);
 
