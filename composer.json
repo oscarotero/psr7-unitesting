@@ -18,7 +18,7 @@
         "issues": "https://github.com/oscarotero/psr7-unitesting/issues"
     },
     "require": {
-        "php": ">=5.4",
+        "php": ">=5.5",
         "phpunit/phpunit": "*",
         "psr/http-message": "^1.0",
         "symfony/dom-crawler": "~3.0",
