@@ -19,12 +19,12 @@ class Header extends AbstractConstraint
         return $this->expected == $message->getHeaderLine($this->key);
     }
 
-    protected function additionalFailureDescription($request)
+    protected function additionalFailureDescription($message)
     {
         if (!$message->hasHeader()) {
             return 'No header found';
         }
 
-        return sprintf('"%s: %s" returned', $this->expected, $request->getHeaderLine($this->key));
+        return sprintf('"%s: %s" returned', $this->expected, $message->getHeaderLine($this->key));
     }
 }

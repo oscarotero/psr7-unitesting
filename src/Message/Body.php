@@ -19,7 +19,7 @@ class Body extends AbstractConstraint
         return (string) $message->getBody() == $this->expected;
     }
 
-    protected function additionalFailureDescription($request)
+    protected function additionalFailureDescription($message)
     {
         return sprintf('"%s" returned', (string) $message->getBody());
     }

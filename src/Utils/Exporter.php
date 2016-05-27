@@ -12,7 +12,7 @@ use Symfony\Component\DomCrawler\Crawler;
 class Exporter
 {
     /**
-     * @param string $expected
+     * @param string $value
      */
     public function export($value)
     {
