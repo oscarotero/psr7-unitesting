@@ -1,8 +1,7 @@
 <?php
 
-namespace Psr7Unitesting\Assert;
+namespace Psr7Unitesting;
 
-use PHPUnit_Framework_Assert as Assert;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -18,10 +17,10 @@ class Response extends Message
     /**
      * Constructor.
      *
-     * @param ResponseInterface $message
-     * @param BaseAssert|null   $previous
+     * @param ResponseInterface   $message
+     * @param AbstractAssert|null $previous
      */
-    public function __construct(ResponseInterface $message, BaseAssert $previous = null)
+    public function __construct(ResponseInterface $message, Utils\AbstractAssert $previous = null)
     {
         parent::__construct($message, $previous);
     }
@@ -36,9 +35,7 @@ class Response extends Message
      */
     public function statusCode($code, $message = '')
     {
-        Assert::assertSame($code, $this->message->getStatusCode(), $message);
-
-        return $this;
+        return $this->assert($this->message, new Response\StatusCode($code), $message);
     }
 
     /**
@@ -51,9 +48,7 @@ class Response extends Message
      */
     public function reasonPhrase($reasonPhrase, $message = '')
     {
-        Assert::assertSame($reasonPhrase, $this->message->getReasonPhrase(), $message);
-
-        return $this;
+        return $this->assert($this->message, new Response\ReasonPhrase($reasonPhrase), $message);
     }
 
     /**

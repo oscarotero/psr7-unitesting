@@ -1,13 +1,14 @@
 <?php
 
-namespace Psr7Unitesting\Assert;
+namespace Psr7Unitesting;
 
+use PHPUnit_Framework_Assert as Assert;
 use Psr\Http\Message\UriInterface;
 
 /**
  * Class to execute assertions with a UriInterface instance.
  */
-class Uri extends BaseAssert
+class Uri extends Utils\AbstractAssert
 {
     /**
      * @var UriInterface
@@ -17,10 +18,10 @@ class Uri extends BaseAssert
     /**
      * Constructor.
      *
-     * @param UriInterface    $uri
-     * @param BaseAssert|null $previous
+     * @param UriInterface        $uri
+     * @param AbstractAssert|null $previous
      */
-    public function __construct(UriInterface $uri, BaseAssert $previous = null)
+    public function __construct(UriInterface $uri, Utils\AbstractAssert $previous = null)
     {
         $this->uri = $uri;
         $this->previous($previous);
@@ -36,9 +37,7 @@ class Uri extends BaseAssert
      */
     public function scheme($scheme, $message = '')
     {
-        Assert::assertSame($scheme, $this->uri->getScheme(), $message);
-
-        return $this;
+        return $this->assert($this->uri, new Uri\Scheme($scheme), $message);
     }
 
     /**
@@ -51,9 +50,7 @@ class Uri extends BaseAssert
      */
     public function authority($authority, $message = '')
     {
-        Assert::assertSame($authority, $this->uri->getAuthority(), $message);
-
-        return $this;
+        return $this->assert($this->uri, new Uri\Authority($authority), $message);
     }
 
     /**
@@ -66,9 +63,7 @@ class Uri extends BaseAssert
      */
     public function userInfo($userInfo, $message = '')
     {
-        Assert::assertSame($userInfo, $this->uri->getUserInfo(), $message);
-
-        return $this;
+        return $this->assert($this->uri, new Uri\UserInfo($userInfo), $message);
     }
 
     /**
@@ -81,9 +76,7 @@ class Uri extends BaseAssert
      */
     public function host($host, $message = '')
     {
-        Assert::assertSame($host, $this->uri->getHost(), $message);
-
-        return $this;
+        return $this->assert($this->uri, new Uri\Host($host), $message);
     }
 
     /**
@@ -96,9 +89,7 @@ class Uri extends BaseAssert
      */
     public function port($port, $message = '')
     {
-        Assert::assertSame($port, $this->uri->getPort(), $message);
-
-        return $this;
+        return $this->assert($this->uri, new Uri\Port($port), $message);
     }
 
     /**
@@ -111,9 +102,7 @@ class Uri extends BaseAssert
      */
     public function path($path, $message = '')
     {
-        Assert::assertSame($path, $this->uri->getPath(), $message);
-
-        return $this;
+        return $this->assert($this->uri, new Uri\Path($path), $message);
     }
 
     /**
@@ -126,9 +115,7 @@ class Uri extends BaseAssert
      */
     public function query($query, $message = '')
     {
-        Assert::assertSame($query, $this->uri->getQuery(), $message);
-
-        return $this;
+        return $this->assert($this->uri, new Uri\Query($query), $message);
     }
 
     /**
@@ -141,23 +128,6 @@ class Uri extends BaseAssert
      */
     public function fragment($fragment, $message = '')
     {
-        Assert::assertSame($fragment, $this->uri->getFragment(), $message);
-
-        return $this;
-    }
-
-    /**
-     * Asserts the whole url.
-     *
-     * @param string $url
-     * @param string $message
-     *
-     * @return self
-     */
-    public function string($url, $message = '')
-    {
-        Assert::assertSame($url, (string) $this->uri, $message);
-
-        return $this;
+        return $this->assert($this->uri, new Uri\Fragment($fragment), $message);
     }
 }

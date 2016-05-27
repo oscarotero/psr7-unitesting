@@ -1,14 +1,13 @@
 <?php
 
-namespace Psr7Unitesting\Assert;
+namespace Psr7Unitesting;
 
-use PHPUnit_Framework_Assert as Assert;
 use Psr\Http\Message\MessageInterface;
 
 /**
  * Class to execute assertions for generic http messages.
  */
-class Message extends BaseAssert
+class Message extends Utils\AbstractAssert
 {
     /**
      * @var MessageInterface
@@ -18,10 +17,10 @@ class Message extends BaseAssert
     /**
      * Constructor.
      *
-     * @param MessageInterface $message
-     * @param BaseAssert|null  $previous
+     * @param MessageInterface    $message
+     * @param AbstractAssert|null $previous
      */
-    public function __construct(MessageInterface $message, BaseAssert $previous = null)
+    public function __construct(MessageInterface $message, Utils\AbstractAssert $previous = null)
     {
         $this->message = $message;
         $this->previous($previous);
@@ -37,9 +36,7 @@ class Message extends BaseAssert
      */
     public function hasHeader($name, $message = '')
     {
-        Assert::assertTrue($this->message->hasHeader($name), $message);
-
-        return $this;
+        return $this->assert($this->message, new Message\HasHeader($name), $message);
     }
 
     /**
@@ -52,9 +49,7 @@ class Message extends BaseAssert
      */
     public function hasNotHeader($name, $message = '')
     {
-        Assert::assertFalse($this->message->hasHeader($name), $message);
-
-        return $this;
+        return $this->assert($this->message, new Message\HasNotHeader($name), $message);
     }
 
     /**
@@ -66,11 +61,9 @@ class Message extends BaseAssert
      *
      * @return self
      */
-    public function hasHeaderWithText($name, $value, $message = '')
+    public function header($name, $value, $message = '')
     {
-        Assert::assertSame($value, $this->message->getHeaderLine($name), $message);
-
-        return $this;
+        return $this->assert($this->message, new Message\Header($name, $value), $message);
     }
 
     /**
@@ -83,18 +76,29 @@ class Message extends BaseAssert
      */
     public function protocolVersion($version, $message = '')
     {
-        Assert::assertSame($version, $this->message->getProtocolVersion(), $message);
+        return $this->assert($this->message, new Message\ProtocolVersion($version), $message);
+    }
 
-        return $this;
+    /**
+     * Asserts the whole body.
+     * 
+     * @param string|StreamInterface $body
+     * @param string                 $message
+     *
+     * @return self
+     */
+    public function body($body, $message = '')
+    {
+        return $this->assert($this->message, new Message\Body((string) $body), $message);
     }
 
     /**
      * Creates a Body instance to execute assertions in the body.
      *
-     * @return Body
+     * @return Stream
      */
     public function assertBody()
     {
-        return new Body($this->message->getBody(), $this);
+        return new Stream($this->message->getBody(), $this);
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace Psr7Unitesting\Assert;
+namespace Psr7Unitesting;
 
-use PHPUnit_Framework_Assert as Assert;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\UriInterface;
 
 /**
  * Class to execute assertions in a RequestInstance message.
@@ -18,10 +18,10 @@ class Request extends Message
     /**
      * Constructor.
      *
-     * @param RequestInterface $message
-     * @param BaseAssert|null  $previous
+     * @param RequestInterface    $message
+     * @param AbstractAssert|null $previous
      */
-    public function __construct(RequestInterface $message, BaseAssert $previous = null)
+    public function __construct(RequestInterface $message, Utils\AbstractAssert $previous = null)
     {
         parent::__construct($message, $previous);
     }
@@ -36,9 +36,7 @@ class Request extends Message
      */
     public function method($method, $message = '')
     {
-        Assert::assertSame($method, $this->message->getMethod(), $message);
-
-        return $this;
+        return $this->assert($this->message, new Request\Method($method), $message);
     }
 
     /**
@@ -51,9 +49,20 @@ class Request extends Message
      */
     public function requestTarget($requestTarget, $message = '')
     {
-        Assert::assertSame($requestTarget, $this->message->getRequestTarget(), $message);
+        return $this->assert($this->message, new Request\RequestTarget($requestTarget), $message);
+    }
 
-        return $this;
+    /**
+     * Asserts the uri value.
+     *
+     * @param string|UriInterface $uri
+     * @param string              $message
+     *
+     * @return self
+     */
+    public function uri($uri, $message = '')
+    {
+        return $this->assert($this->message, new Request\Uri((string) $uri), $message);
     }
 
     /**
