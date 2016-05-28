@@ -4,6 +4,7 @@ use Zend\Diactoros\ServerRequest;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Uri;
 use Zend\Diactoros\UploadedFile;
+use Zend\Diactoros\Stream;
 use Psr7Unitesting\Assert;
 
 class AppTest extends PHPUnit_Framework_TestCase
@@ -20,6 +21,7 @@ class AppTest extends PHPUnit_Framework_TestCase
             ->withUploadedFiles([
                 'file' => new UploadedFile('file.jpg', 50, 0, 'file.jpg', 'image/jpg'),
             ])
+            ->withBody(new Stream('php://temp', 'r'))
             ->withHeader('Content-Type', 'text/html');
 
         Assert::create($request)
@@ -97,7 +99,6 @@ HTML
                 ->has('h1')
                 ->hasNot('section')
                 ->contains('h1', 'mundo')
-                ->notContains('h1', 'mundor')
-                ->isValid();
+                ->notContains('h1', 'mundor');
     }
 }
