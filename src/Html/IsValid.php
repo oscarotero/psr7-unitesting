@@ -69,6 +69,6 @@ class IsValid extends Constraint
 
     protected function additionalFailureDescription($html)
     {
-        return sprintf('%d errors found: %s', count($this->errors), json_encode($this->errors, JSON_PRETTY_PRINT));
+        return sprintf('%d errors found: %s', count($this->errors), print_r(array_values($this->errors), true));
     }
 }
