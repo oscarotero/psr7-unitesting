@@ -1,6 +1,7 @@
 # psr7-unitesting
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/oscarotero/psr7-unitesting/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/oscarotero/psr7-unitesting/?branch=master)
+[![Build Status](https://travis-ci.org/oscarotero/psr7-unitesting.svg?branch=master)](https://travis-ci.org/oscarotero/psr7-unitesting)
 
 Simple library to execute unit tests in [psr-7](http://www.php-fig.org/psr/psr-7/) compatible http messages.
 
