@@ -2,7 +2,6 @@
 
 namespace Psr7Unitesting;
 
-use PHPUnit_Framework_Assert as Assert;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
